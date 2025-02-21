@@ -1,4 +1,4 @@
-from okex.core.core import OkexApi
+from okex.core.core import OkexApi, OrderType
 
 class ProApi(OkexApi):
     def available_coin(self):
@@ -49,11 +49,44 @@ class ProApi(OkexApi):
         """
         return self._request('GET', '/oapi/v1/trade/market/history')
 
-    def trade_order(self):
+    def trade_order(self, quantity, symbol, o_type: OrderType, side, price=None, stop_price=None):
         """
         https://docs.ok-ex.io/?python#trade-order
+        :quantity Require
+        :symbol Require
+        :o_type Require order type define as enum
+        :side Require
+        :price require except market o_type
+        :stop_price require on stop loss o_type
         """
-        return self._request('GET', '/oapi/v1/trade/market/history')
+        params = {
+            'quantity': quantity,
+            'symbol': symbol,
+            'type': o_type.name,  #(LIMIT , MARKET , STOP_LOSS)
+            'side': side
+        }
+        if o_type != OrderType.MARKET:
+            params['price'] = price
+        if o_type == OrderType.STOP_LOSS:
+            params['stop_price'] = stop_price
+        return self._request('POST', '/oapi/v1/trade/market', params=params)
 
+    def order_cancel(self, order_id):
+        """
+        https://docs.ok-ex.io/?python#order-cancel
+        :order_id Require
+        """
+        params = {
+            'order_id': order_id
+        }
+        return self._request('POST', '/oapi/v1/trade/market/cancel', params=params)
 
-
+    def order_receipt(self, order_id):
+        """
+        https://docs.ok-ex.io/?python#order-receipt
+        :order_id Require
+        """
+        params = {
+            'order_id': order_id
+        }
+        return self._request('POST', '/oapi/v1/trade/market/fills', params=params)

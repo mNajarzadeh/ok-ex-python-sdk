@@ -3,6 +3,13 @@ import hmac
 import hashlib
 import requests
 import json
+from enum import Enum
+
+class OrderType(Enum):
+    LIMIT = 1
+    MARKET = 2
+    STOP_LOSS = 3
+
 class OkexApi(object):
     def __init__(self, api_key='', secret_key=''):
         """
