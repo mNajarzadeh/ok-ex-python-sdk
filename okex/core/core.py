@@ -10,12 +10,19 @@ class OrderType(Enum):
     MARKET = 2
     STOP_LOSS = 3
 
+class Side(Enum):
+    BUY = 1
+    SELL = 2
+
+class Mode(Enum):
+    TOTAL = 1
+    AMOUNT = 2
+
 class OkexApi(object):
     def __init__(self, api_key='', secret_key=''):
         """
         https://docs.ok-ex.io/?python#start-working
         """
-
         self.url = 'https://azapi.ok-ex.io'
         self.api_key = api_key
         self.secret_key= secret_key

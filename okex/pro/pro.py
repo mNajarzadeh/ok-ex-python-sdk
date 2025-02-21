@@ -1,4 +1,4 @@
-from okex.core.core import OkexApi, OrderType
+from okex.core.core import OkexApi, OrderType, Side, Mode
 
 class ProApi(OkexApi):
     def available_coin(self):
@@ -7,7 +7,7 @@ class ProApi(OkexApi):
         """
         return self._request('GET', '/oapi/v1/market/tickers')
 
-    def coin_details(self, symbol):
+    def coin_details(self, symbol:str):
         """
         https://docs.ok-ex.io/?python#coin-details
         :symbol Require
@@ -17,7 +17,7 @@ class ProApi(OkexApi):
         }
         return self._request('GET', '/oapi/v1/market/ticker', params=params)
 
-    def orderbooks(self, symbol):
+    def orderbooks(self, symbol:str):
         """
         https://docs.ok-ex.io/?python#orderbooks
         :symbol Require
@@ -27,7 +27,7 @@ class ProApi(OkexApi):
         }
         return self._request('GET', '/oapi/v1/market/orderbook', params=params)
 
-    def trade_history(self, symbol):
+    def trade_history(self, symbol:str):
         """
         https://docs.ok-ex.io/?python#trade-history
         :symbol Require
@@ -49,7 +49,7 @@ class ProApi(OkexApi):
         """
         return self._request('GET', '/oapi/v1/trade/market/history')
 
-    def trade_order(self, quantity, symbol, o_type: OrderType, side, price=None, stop_price=None):
+    def trade_order(self, quantity:str, symbol:str, o_type: OrderType, side:Side, price:str = None, stop_price:str = None):
         """
         https://docs.ok-ex.io/?python#trade-order
         :quantity Require
@@ -71,7 +71,7 @@ class ProApi(OkexApi):
             params['stop_price'] = stop_price
         return self._request('POST', '/oapi/v1/trade/market', params=params)
 
-    def order_cancel(self, order_id):
+    def order_cancel(self, order_id:str):
         """
         https://docs.ok-ex.io/?python#order-cancel
         :order_id Require
@@ -81,7 +81,7 @@ class ProApi(OkexApi):
         }
         return self._request('POST', '/oapi/v1/trade/market/cancel', params=params)
 
-    def order_receipt(self, order_id):
+    def order_receipt(self, order_id:str):
         """
         https://docs.ok-ex.io/?python#order-receipt
         :order_id Require
