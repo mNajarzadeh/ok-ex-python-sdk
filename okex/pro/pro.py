@@ -1,4 +1,4 @@
-from okex.core.core import OkexApi, OrderType, Side, Mode
+from okex.core.core import OkexApi, OrderType, Side
 
 class ProApi(OkexApi):
     def available_coin(self):
